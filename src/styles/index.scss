@@ -1,0 +1,11 @@
+@use 'reset';
+@use 'colors';
+@use 'fonts';
+@use 'units';
+@use 'layout';
+
+body {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-family: var(--primary-font);
+}
