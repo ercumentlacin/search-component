@@ -12,8 +12,8 @@ export const handlers = [
         ctx.status(404),
         ctx.json({ error: 'No results found. Please try another search.' })
       );
+    } else if (query === 'rick') {
+      return res(ctx.status(200), ctx.json(rickMock));
     }
-
-    return res(ctx.status(200), ctx.json(rickMock));
   }),
 ];

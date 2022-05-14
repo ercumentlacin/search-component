@@ -10,6 +10,13 @@ SCSS was used to style the component.
 Created useFetch hook to fetch the data from the API.
 Created useDebounceValue hook to debounce the search value.
 
+## Coverage summary
+
+Statements : 98.3% ( 58/59 )
+Branches : 75% ( 9/12 )
+Functions : 96.42% ( 27/28 )
+Lines : 98.07% ( 51/52 )
+
 ## Available Scripts
 
 In the project directory, you can run:
