@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Search Component Description
+
+This component is a search component that can be used to search for Rick and Morty characters.
+It uses the [rickandmortyapi](https://rickandmortyapi.com/) to fetch the data.
+SCSS was used to style the component.
+Created useFetch hook to fetch the data from the API.
+Created useDebounceValue hook to debounce the search value.
+
 ## Available Scripts
 
 In the project directory, you can run:
