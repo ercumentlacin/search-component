@@ -4,18 +4,18 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Search Component Description
 
-This component is a search component that can be used to search for Rick and Morty characters.
-It uses the [rickandmortyapi](https://rickandmortyapi.com/) to fetch the data.
-SCSS was used to style the component.
-Created useFetch hook to fetch the data from the API.
-Created useDebounceValue hook to debounce the search value.
+- This component is a search component that can be used to search for Rick and Morty characters.
+- It uses the [rickandmortyapi](https://rickandmortyapi.com/) to fetch the data.
+- SCSS was used to style the component.
+- Created useFetch hook to fetch the data from the API.
+- Created useDebounceValue hook to debounce the search value.
 
 ## Coverage summary
 
-Statements : 98.3% ( 58/59 )
-Branches : 75% ( 9/12 )
-Functions : 96.42% ( 27/28 )
-Lines : 98.07% ( 51/52 )
+- Statements : 98.3% ( 58/59 )
+- Branches : 75% ( 9/12 )
+- Functions : 96.42% ( 27/28 )
+- Lines : 98.07% ( 51/52 )
 
 ## Available Scripts
 
