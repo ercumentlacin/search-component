@@ -6,9 +6,11 @@ import { debounce } from '../../utils';
 import { ReactComponent as SearchSvg } from '../../assets/svg/search.svg';
 
 import './search.scss';
-import Loading from '../Loading';
 
+const Loading = lazy(() => import('../Loading'));
 const Cell = lazy(() => import('../Cell'));
+const Input = lazy(() => import('../Input'));
+const Label = lazy(() => import('../Label'));
 
 export default function Search() {
   const [params, setParams] = useState<{
@@ -21,23 +23,20 @@ export default function Search() {
     const { value } = event.target;
     setParams({ query: value });
   }, 500);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const optimizedFetch = useCallback(onChangeQuery, []);
+
+  const optimizedFetch = useCallback(onChangeQuery, [onChangeQuery]);
 
   return (
     <div className='search'>
       <div className='search__area'>
-        <label htmlFor='search'>
+        <Label>
           <SearchSvg className='search__icon' />
-        </label>
-        <input
-          type='search'
-          id='search'
-          onChange={optimizedFetch}
-          placeholder='Search...'
-        />
+        </Label>
+        <Input optimizedFetch={optimizedFetch} />
       </div>
+
       {loading && <Loading />}
+
       {data &&
         data.map((result: Result) => <Cell {...result} key={result.id} />)}
       {error && <div className='search__error'>{JSON.stringify(error)}</div>}
