@@ -8,7 +8,12 @@ type Props = {
 export default function Loading({ variant = 'default' }: Props) {
   return (
     <div className={`loading loading--${variant}`}>
-      <SearchSvg className='loading__icon' />
+      <SearchSvg
+        className='loading__icon'
+        aria-labelledby='loading-icon'
+        role='img'
+        aria-label='loading'
+      />
     </div>
   );
 }

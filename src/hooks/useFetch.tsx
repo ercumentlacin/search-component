@@ -72,8 +72,6 @@ function useFetch({ query }: Props) {
     };
   }, [query]);
 
-  console.log({ data, error, loading });
-
   return { data, error, loading };
 }
 
