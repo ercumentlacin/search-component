@@ -7,10 +7,21 @@ type Props = {
 
 const url = 'https://rickandmortyapi.com/api/character/';
 
+const initialState = {
+  data: null,
+  error: null,
+  loading: false,
+};
+
+type IState = Omit<typeof initialState, 'data' | 'error'> & {
+  data: Result[] | null;
+  error: string | null;
+};
+
 function useFetch({ query }: Props) {
-  const [data, setData] = React.useState<null | Result[]>(null);
-  const [error, setError] = React.useState<string | null>(null);
-  const [loading, setLoading] = React.useState(false);
+  const [{ data, loading, error }, setState] = React.useState(
+    initialState as IState
+  );
   const signal = React.useRef<null | AbortSignal>(null);
 
   React.useEffect(() => {
@@ -22,7 +33,10 @@ function useFetch({ query }: Props) {
       uri.searchParams.append('name', query);
     }
 
-    setLoading(true);
+    setState({
+      ...initialState,
+      loading: true,
+    });
 
     fetch(uri.toString(), {
       signal: signal.current,
@@ -38,21 +52,27 @@ function useFetch({ query }: Props) {
       })
       .then((data: RickAndMortyCharacter) => {
         if (!signal.current?.aborted) {
-          setData(data.results);
-          setLoading(false);
-          setError(null);
+          setState({
+            data: data.results,
+            loading: false,
+            error: null,
+          });
         }
       })
       .catch((error: DOMException) => {
-        setError(error.message);
-        setData(null);
-        setLoading(false);
+        setState({
+          error: error.message,
+          loading: false,
+          data: null,
+        });
       });
 
     return () => {
       abortController.abort();
     };
   }, [query]);
+
+  console.log({ data, error, loading });
 
   return { data, error, loading };
 }
