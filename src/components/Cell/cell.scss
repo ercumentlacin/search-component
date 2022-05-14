@@ -1,0 +1,42 @@
+.cell {
+  display: flex;
+  gap: var(--length-small);
+  width: 100%;
+  padding: var(--length-xsmall);
+  background-color: var(--color-gray);
+  color: var(--color-text-primary);
+  user-select: none;
+  cursor: pointer;
+
+  &:nth-child(odd) {
+    background-color: var(--color-white);
+  }
+  &:nth-child(even) {
+    background-color: var(--color-gray);
+  }
+
+  &__image {
+    img {
+      width: calc(var(--length-large) * 4);
+      aspect-ratio: 1;
+    }
+  }
+
+  &__info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--length-small);
+    flex-wrap: wrap;
+
+    > * {
+      line-height: 1.5;
+
+      strong {
+        font-weight: bold;
+        text-decoration: underline;
+        margin-right: 0.5ch;
+      }
+    }
+  }
+}

@@ -1,70 +1,46 @@
-import React from 'react';
+import { ChangeEvent, useCallback, useState, lazy } from 'react';
 import useFetch from '../../hooks/useFetch';
 import { Result } from '../../types';
 import { debounce } from '../../utils';
 
+import { ReactComponent as SearchSvg } from '../../assets/svg/search.svg';
+
+import './search.scss';
+import Loading from '../Loading';
+
+const Cell = lazy(() => import('../Cell'));
+
 export default function Search() {
-  const [search, setSearch] = React.useState('');
-  const [results, setResults] = React.useState<Result[]>([]);
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const [params, setParams] = useState<{
+    query?: string;
+  }>({});
 
-  const { data, error, loading } = useFetch({
-    query: search,
-  });
+  const { data, error, loading } = useFetch(params);
 
-  function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
-    // setSearch(e.target.value);
-    debounce(() => {
-      setSearch(e.target.value);
-    }, 500);
-  }
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('search', search);
-  }
-
-  React.useEffect(() => {
-    if (data) {
-      setResults(data);
-    }
-  }, [data]);
-
-  React.useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [inputRef]);
-
-  const searchResults = React.useMemo(() => {
-    if (search.length === 0) return [];
-
-    return results.filter((result) => {
-      return result.name.toLowerCase().includes(search.toLowerCase());
-    });
-  }, [search, results]);
+  const onChangeQuery = debounce((event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setParams({ query: value });
+  }, 500);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const optimizedFetch = useCallback(onChangeQuery, []);
 
   return (
     <div className='search'>
-      <label htmlFor='search'>Search</label>
-      <input
-        type='text'
-        placeholder='Search'
-        id='search'
-        ref={inputRef}
-        onChange={handleSearch}
-        value={search}
-      />
-
-      <ul className='search__results'>
-        {searchResults.map((result) => (
-          <li key={result.id}>
-            <h2>{result.name}</h2>
-            <p>{result.type}</p>
-          </li>
-        ))}
-      </ul>
+      <div className='search__area'>
+        <label htmlFor='search'>
+          <SearchSvg className='search__icon' />
+        </label>
+        <input
+          type='search'
+          id='search'
+          onChange={optimizedFetch}
+          placeholder='Search...'
+        />
+      </div>
+      {loading && <Loading />}
+      {data &&
+        data.map((result: Result) => <Cell {...result} key={result.id} />)}
+      {error && <div className='search__error'>{JSON.stringify(error)}</div>}
     </div>
   );
 }

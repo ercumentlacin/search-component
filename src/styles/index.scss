@@ -4,6 +4,10 @@
 @use 'units';
 @use 'layout';
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-color: var(--color-primary);
   color: var(--color-white);
