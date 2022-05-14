@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { RickAndMortyCharacter, Result } from '../types';
+import services from '../services';
 
 type Props = {
   query?: string;
@@ -38,18 +39,8 @@ function useFetch({ query }: Props) {
       loading: true,
     });
 
-    fetch(uri.toString(), {
-      signal: signal.current,
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        if (response.status === 404) {
-          throw new Error('No results found. Please try another search.');
-        }
-        throw new Error('Something went wrong. Please try again later.');
-      })
+    services
+      .characters(uri.toString(), { signal: signal.current })
       .then((data: RickAndMortyCharacter) => {
         if (!signal.current?.aborted) {
           setState({
